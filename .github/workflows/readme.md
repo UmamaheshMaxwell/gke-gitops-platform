@@ -1,216 +1,28 @@
-# GKE GitOps Platform
+# GitHub Actions Workflows
 
-Enterprise-grade GitOps platform on Google Kubernetes Engine (GKE) built using Terraform, Terragrunt, Argo CD, Helm, GitHub Actions, and Google Cloud Platform.
+YAML workflow definitions for CI/CD automation in this repository.
 
-This project demonstrates modern Platform Engineering practices including Infrastructure as Code (IaC), GitOps, multi-environment deployments, Kubernetes platform automation, CI/CD, observability, and cloud-native security.
+## Purpose
 
----
+Workflows in this directory validate changes, run infrastructure plans, and trigger deployments across environments. They integrate with Terraform, Terragrunt, and GCP using GitHub Actions.
 
-## Objectives
+## Planned Workflows
 
-* Provision cloud infrastructure using Terraform and Terragrunt
-* Deploy and manage Kubernetes workloads using GitOps
-* Implement multi-environment deployments (Dev → Staging → Production)
-* Automate infrastructure and application delivery pipelines
-* Demonstrate production-grade platform engineering practices
-* Showcase enterprise Kubernetes architecture on GCP
+| Workflow | Trigger | Description |
+|----------|---------|-------------|
+| `terraform-validate.yml` | Pull request | Format check, lint, and validate Terraform/Terragrunt |
+| `terraform-plan.yml` | Pull request | Generate and post Terragrunt plans per environment |
+| `terraform-apply-dev.yml` | Merge to `develop` | Apply infrastructure changes to dev |
+| `terraform-apply-staging.yml` | Manual / tag | Promote infrastructure to staging |
+| `terraform-apply-prod.yml` | Manual / release | Apply infrastructure changes to production |
 
----
+## Conventions
 
-## Technology Stack
-
-### Cloud
-
-* Google Cloud Platform (GCP)
-* Google Kubernetes Engine (GKE)
-* Artifact Registry
-* Cloud Storage
-* IAM & Service Accounts
-
-### Infrastructure as Code
-
-* Terraform
-* Terragrunt
-
-### Kubernetes
-
-* Kubernetes
-* Helm
-* Argo CD
-
-### CI/CD
-
-* GitHub Actions
-
-### Observability
-
-* Prometheus
-* Grafana
-* Google Cloud Monitoring
-
----
-
-## Repository Structure
-
-```text
-.
-├── .github/
-│
-├── bootstrap/
-│
-├── docs/
-│
-├── gitops/
-│
-├── helm/
-│
-└── infrastructure/
-    └── gcp/
-        ├── _common/
-        ├── _modules/
-        ├── dev/
-        ├── staging/
-        ├── prod/
-        └── root.hcl
-```
-
----
-
-## Environment Strategy
-
-```text
-Development
-     │
-     ▼
- Staging
-     │
-     ▼
- Production
-```
-
-Infrastructure and application changes are promoted through environments using pull requests and GitOps workflows.
-
----
-
-## Infrastructure Layout
-
-```text
-infrastructure/gcp/
-
-├── _common/
-│   ├── cloud-vpc.hcl
-│   ├── gke-cluster.hcl
-│   ├── artifact-registry.hcl
-│   └── monitoring.hcl
-│
-├── _modules/
-│   ├── cloud-vpc
-│   ├── gke-cluster
-│   ├── artifact-registry
-│   └── monitoring
-│
-├── dev/
-├── staging/
-└── prod/
-```
-
----
-
-## Branching Strategy
-
-### Main Branch
-
-Production-ready code.
-
-### Develop Branch
-
-Active development and integration branch.
-
-### Pull Requests
-
-All changes are introduced through Pull Requests to simulate enterprise development workflows.
-
----
-
-## Planned Features
-
-### Phase 1 – Foundation
-
-* Repository Structure
-* Terraform Modules
-* Terragrunt Configuration
-* Remote State Configuration
-
-### Phase 2 – Core Infrastructure
-
-* VPC
-* Private GKE Cluster
-* Artifact Registry
-* IAM and Service Accounts
-
-### Phase 3 – CI/CD
-
-* GitHub Actions
-* Terraform Validation
-* Automated Infrastructure Deployment
-
-### Phase 4 – GitOps
-
-* Argo CD Installation
-* App of Apps Pattern
-* Environment Promotion
-
-### Phase 5 – Platform Services
-
-* Ingress Controller
-* External DNS
-* Cert Manager
-* Secret Management
-
-### Phase 6 – Observability
-
-* Prometheus
-* Grafana
-* Alerting
-* Dashboards
-
-### Phase 7 – Security
-
-* Workload Identity
-* RBAC
-* Policy Enforcement
-* Image Scanning
-
----
-
-## Architecture Vision
-
-```text
-GitHub
-   │
-   ▼
-GitHub Actions
-   │
-   ▼
-Terraform / Terragrunt
-   │
-   ▼
-Google Cloud Platform
-   │
-   ▼
-Google Kubernetes Engine
-   │
-   ▼
-Argo CD
-   │
-   ▼
-Kubernetes Applications
-```
-
----
+- Use reusable workflows or composite actions where logic is shared
+- Require GCP authentication via Workload Identity Federation (no long-lived keys)
+- Scope environment secrets and variables to GitHub Environments (`dev`, `staging`, `prod`)
+- Fail fast on validation errors before running plans or applies
 
 ## Status
 
-🚧 Work in Progress
-
-This repository is being built incrementally to demonstrate real-world Cloud Platform Engineering and GitOps practices on Google Cloud Platform.
+Work in progress — workflows will be added in Phase 3 (CI/CD).
