@@ -1,15 +1,3 @@
-<<<<<<< Updated upstream
-# GitHub Actions
-
-This directory contains GitHub Actions workflows for CI/CD automation.
-
-## Planned Workflows
-
-- Terraform validation and formatting checks
-- Terragrunt plan and apply pipelines
-- Pull request automation
-- Environment-specific deployment triggers
-=======
 # GitHub Actions Workflows
 
 YAML workflow definitions for CI/CD automation in this repository.
@@ -34,7 +22,6 @@ Workflows in this directory validate changes, run infrastructure plans, and trig
 - Require GCP authentication via Workload Identity Federation (no long-lived keys)
 - Scope environment secrets and variables to GitHub Environments (`dev`, `staging`, `prod`)
 - Fail fast on validation errors before running plans or applies
->>>>>>> Stashed changes
 
 ## Status
 
